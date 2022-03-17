@@ -1,4 +1,5 @@
 import cloudinary from "cloudinary";
+import Website from "../models/website";
 
 // sendgrid
 const sgMail = require("@sendgrid/mail");
@@ -38,6 +39,37 @@ export const contact = async (req, res) => {
       console.log(err);
       res.json({ ok: false });
     }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
+
+export const createPage = async (req, res) => {
+  try {
+    // console.log("homepage", req.body);
+    const { page } = req.body;
+    const found = await Website.findOne({ page });
+    if (found) {
+      const updated = await Website.findOneAndUpdate({ page }, req.body, {
+        new: true,
+      });
+      return res.json(updated);
+    } else {
+      const created = await new Website(req.body).save();
+      return res.json(created);
+    }
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
+
+export const getPage = async (req, res) => {
+  try {
+    const { page } = req.params;
+    const found = await Website.findOne({ page }).populate("fullWidthImage");
+    return res.json(found);
   } catch (err) {
     console.log(err);
     res.sendStatus(400);
