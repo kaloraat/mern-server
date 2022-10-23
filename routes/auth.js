@@ -36,10 +36,10 @@ router.get("/current-subscriber", requireSignin, currentUser);
 router.get("/current-user", requireSignin, currentUserProfile);
 // users
 router.post("/create-user", requireSignin, isAdmin, createUser);
-router.put("/update-user", requireSignin, updateUser);
-router.put("/update-user-by-admin", requireSignin, isAdmin, updateUserByAdmin);
+// router.put("/update-user", requireSignin, updateUser);
+// router.put("/update-user-by-admin", requireSignin, isAdmin, updateUserByAdmin);
 router.get("/users", requireSignin, isAdmin, users);
-router.delete("/user/:userId", requireSignin, isAdmin, removeUser);
+// router.delete("/user/:userId", requireSignin, isAdmin, removeUser);
 router.get("/user/:userId", requireSignin, getUser);
 
 module.exports = router;
